@@ -10,13 +10,14 @@ public class TestValues {
     CharacterMove sheikJab;
     List<CharacterMove> characterMoves;
     List<Character> characters;
+
     public TestValues() {
-        this.sheik = new Character("Sheik");
-        this.sheikJab = new CharacterMove("Jab 1", "Sheik");
+        this.sheik = new Character("sheik");
+        this.sheikJab = new CharacterMove("jab 1", "sheik");
 
         this.characterMoves = List.of(
                 sheikJab,
-                new CharacterMove("Jab 2", "Bayonetta"));
+                new CharacterMove("jab 2", "bayonetta"));
         this.characters = List.of(sheik);
     }
 

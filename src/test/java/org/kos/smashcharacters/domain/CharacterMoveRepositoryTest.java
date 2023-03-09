@@ -16,7 +16,7 @@ public class CharacterMoveRepositoryTest {
     }
 
     @Test
-    public void GivenAInMemoryRepoIShouldBeAbleToRetrieveItsCharacters() {
+    public void GivenAnInMemoryRepoIShouldBeAbleToRetrieveItsCharacterMoves() {
         CharacterMoveInMemoryRepository repo = new CharacterMoveInMemoryRepository(values.characterMoves());
         GivenACharacterRepositoryAndACharacterNameIShouldBeAbleToRetrieveItsMoves(repo);
     }
