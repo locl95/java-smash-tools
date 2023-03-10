@@ -28,6 +28,6 @@ public class CharacterAppTest {
         CharacterMoveInMemoryRepository movesRepo = new CharacterMoveInMemoryRepository(values.characterMoves());
 
         CharacterApp app = new CharacterProdApp(charactersRepo, movesRepo);
-        Assert.assertEquals(List.of(values.sheikJab()), app.getCharacterMoves("Sheik"));
+        Assert.assertEquals(List.of(values.sheikJab()), app.getCharacterMoves("sheik"));
     }
 }

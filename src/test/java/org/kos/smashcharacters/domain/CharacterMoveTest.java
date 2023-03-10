@@ -10,6 +10,6 @@ public class CharacterMoveTest {
 
     @Test
     public void GivenACharacterMoveIShouldBeAbleToRetrieveItsName() {
-        Assert.assertEquals("Jab 1", values.sheikJab().name());
+        Assert.assertEquals("jab 1", values.sheikJab().name());
     }
 }
