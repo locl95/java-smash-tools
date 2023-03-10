@@ -12,7 +12,7 @@ public class CharacterMoveRepositoryTest {
     TestValues values = new TestValues();
 
     private void GivenACharacterRepositoryAndACharacterNameIShouldBeAbleToRetrieveItsMoves(CharacterMoveRepository repo) {
-        Assert.assertEquals(List.of(values.sheikJab()), repo.getCharacterMoves("Sheik"));
+        Assert.assertEquals(List.of(values.sheikJab()), repo.getCharacterMoves("sheik"));
     }
 
     @Test

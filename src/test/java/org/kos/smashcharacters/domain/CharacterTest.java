@@ -10,6 +10,6 @@ public class CharacterTest {
 
     @Test
     public void GivenACharacterIShouldBeAbleToRetrieveItsName() {
-        Assert.assertEquals("Sheik", values.sheik().name());
+        Assert.assertEquals("sheik", values.sheik().name());
     }
 }
