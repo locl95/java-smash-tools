@@ -1,3 +1,4 @@
 package org.kos.smashcharacters.domain;
 
-public record CharacterMove(String name, String characterName) {}
+public record CharacterMove(String name, String characterSlug) {
+}

@@ -15,21 +15,20 @@ public class CharacterScrappingRepository implements CharacterRepository {
     @Override
     public List<Character> getCharacters() {
         try {
-            Document doc = Jsoup.connect("https://ultimateframedata.com/").get();
-            Element elementsByClass = doc
+            Document doc = Jsoup.connect("https://ultimateframedata.com").get();
+            Element elementsById = doc
                     .body()
                     .getElementById("charList");
 
-            Optional<Element> foo = elementsByClass == null ? Optional.empty() : Optional.of(elementsByClass);
+            Optional<Element> maybeCharList = elementsById == null ? Optional.empty() : Optional.of(elementsById);
 
-            return foo.map(element -> element
+            return maybeCharList.map(element -> element
                     .getElementsByClass("charactericon")
                     .next()
                     .select("a")
                     .eachAttr("href")
-                    .stream().map(s -> s.replace("/", ""))
-                    .map(s -> s.replace("_", " "))
-                    .map(Character::new)
+                    .stream()
+                    .map(s -> new Character(s, s.replace("/", "").replace("_", " ")))
                     .toList()).orElseGet(List::of);
         } catch (IOException e) {
             return List.of();

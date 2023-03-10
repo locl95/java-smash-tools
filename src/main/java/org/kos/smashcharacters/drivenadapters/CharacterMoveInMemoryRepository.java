@@ -14,7 +14,7 @@ public class CharacterMoveInMemoryRepository implements CharacterMoveRepository 
     }
 
     @Override
-    public List<CharacterMove> getCharacterMoves(String characterName) {
-        return characterMoves.stream().filter(cm -> cm.characterName().equals(characterName)).collect(Collectors.toList());
+    public List<CharacterMove> getCharacterMoves(String characterSlug) {
+        return characterMoves.stream().filter(cm -> cm.characterSlug().equals(characterSlug)).collect(Collectors.toList());
     }
 }

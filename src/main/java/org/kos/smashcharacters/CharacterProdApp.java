@@ -17,11 +17,11 @@ public class CharacterProdApp implements CharacterApp {
 
     @Override
     public List<Character> getCharacters() {
-       return characterRepository.getCharacters();
+        return characterRepository.getCharacters();
     }
 
     @Override
-    public List<CharacterMove> getCharacterMoves(String characterName) {
-       return characterMoveRepository.getCharacterMoves(characterName);
+    public List<CharacterMove> getCharacterMoves(String characterSlug) {
+        return characterMoveRepository.getCharacterMoves(characterSlug);
     }
 }

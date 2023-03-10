@@ -1,3 +1,4 @@
 package org.kos.smashcharacters.domain;
 
-public record Character(String name){}
+public record Character(String slug, String name) {
+}

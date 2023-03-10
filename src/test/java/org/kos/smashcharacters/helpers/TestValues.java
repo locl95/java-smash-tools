@@ -12,12 +12,12 @@ public class TestValues {
     List<Character> characters;
 
     public TestValues() {
-        this.sheik = new Character("sheik");
-        this.sheikJab = new CharacterMove("jab 1", "sheik");
+        this.sheik = new Character("/sheik", "sheik");
+        this.sheikJab = new CharacterMove("jab 1", "/sheik");
 
         this.characterMoves = List.of(
                 sheikJab,
-                new CharacterMove("jab 2", "bayonetta"));
+                new CharacterMove("jab 2", "/bayonetta"));
         this.characters = List.of(sheik);
     }
 
