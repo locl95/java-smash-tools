@@ -2,6 +2,7 @@ package org.kos.smashcharacters;
 
 import org.kos.smashcharacters.domain.*;
 import org.kos.smashcharacters.domain.Character;
+import org.kos.util.either.Either;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class CharacterProdApp implements CharacterApp {
     }
 
     @Override
-    public List<Character> getCharacters() {
+    public Either<Exception, List<Character>> getCharacters() {
         return characterRepository.getCharacters();
     }
 

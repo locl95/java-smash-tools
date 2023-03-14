@@ -1,7 +1,9 @@
 package org.kos.smashcharacters.domain;
 
+import org.kos.util.either.Either;
+
 import java.util.List;
 
 public interface CharacterRepository {
-    List<Character> getCharacters();
+    Either<Exception, List<Character>> getCharacters();
 }

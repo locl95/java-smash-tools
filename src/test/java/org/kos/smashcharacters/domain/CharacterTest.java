@@ -1,7 +1,7 @@
 package org.kos.smashcharacters.domain;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.kos.smashcharacters.helpers.TestValues;
 
 public class CharacterTest {
@@ -10,6 +10,6 @@ public class CharacterTest {
 
     @Test
     public void GivenACharacterIShouldBeAbleToRetrieveItsName() {
-        Assert.assertEquals("sheik", values.sheik().name());
+        Assertions.assertEquals("sheik", values.sheik().name());
     }
 }
