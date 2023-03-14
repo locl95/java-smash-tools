@@ -1,4 +1,4 @@
-package org.kos.smashcharacters.drivenadapters;
+package org.kos.smashcharacters.drivenadapters.scrapping;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

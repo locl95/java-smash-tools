@@ -1,7 +1,7 @@
 package org.kos.smashcharacters.domain;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.kos.smashcharacters.helpers.TestValues;
 
 public class CharacterMoveTest {
@@ -10,6 +10,6 @@ public class CharacterMoveTest {
 
     @Test
     public void GivenACharacterMoveIShouldBeAbleToRetrieveItsName() {
-        Assert.assertEquals("jab 1", values.sheikJab().name());
+        Assertions.assertEquals("jab 1", values.sheikJab().name());
     }
 }

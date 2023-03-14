@@ -1,10 +1,10 @@
 package org.kos.smashcharacters;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.kos.smashcharacters.domain.CharacterApp;
-import org.kos.smashcharacters.drivenadapters.CharacterInMemoryRepository;
-import org.kos.smashcharacters.drivenadapters.CharacterMoveInMemoryRepository;
+import org.kos.smashcharacters.drivenadapters.memory.CharacterInMemoryRepository;
+import org.kos.smashcharacters.drivenadapters.memory.CharacterMoveInMemoryRepository;
 import org.kos.smashcharacters.helpers.TestValues;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class CharacterAppTest {
         CharacterMoveInMemoryRepository movesRepo = new CharacterMoveInMemoryRepository(values.characterMoves());
 
         CharacterApp app = new CharacterProdApp(charactersRepo, movesRepo);
-        Assert.assertEquals(values.characters(), app.getCharacters());
+        Assertions.assertEquals(values.characters(), app.getCharacters().right());
     }
 
     @Test
@@ -28,6 +28,6 @@ public class CharacterAppTest {
         CharacterMoveInMemoryRepository movesRepo = new CharacterMoveInMemoryRepository(values.characterMoves());
 
         CharacterApp app = new CharacterProdApp(charactersRepo, movesRepo);
-        Assert.assertEquals(List.of(values.sheikJab()), app.getCharacterMoves("/sheik"));
+        Assertions.assertEquals(List.of(values.sheikJab()), app.getCharacterMoves("/sheik"));
     }
 }

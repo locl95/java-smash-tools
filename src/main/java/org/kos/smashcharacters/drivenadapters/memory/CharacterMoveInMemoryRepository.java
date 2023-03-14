@@ -1,4 +1,4 @@
-package org.kos.smashcharacters.drivenadapters;
+package org.kos.smashcharacters.drivenadapters.memory;
 
 import org.kos.smashcharacters.domain.CharacterMove;
 import org.kos.smashcharacters.domain.CharacterMoveRepository;
