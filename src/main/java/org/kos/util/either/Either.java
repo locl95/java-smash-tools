@@ -10,6 +10,7 @@ public class Either<L, R> {
         return left;
     }
 
+    //TODO: What happens if right is null!!
     public R right() {
         return right;
     }

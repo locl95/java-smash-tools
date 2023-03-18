@@ -5,11 +5,11 @@ import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 import org.kos.db.FlywayMigrations;
 import org.kos.db.hikari.HikariCP;
-import org.kos.db.sql.Sql;
 import org.kos.smashcharacters.drivenadapters.memory.CharacterInMemoryRepository;
 import org.kos.smashcharacters.drivenadapters.postgres.CharacterPostgresRepository;
 import org.kos.smashcharacters.drivenadapters.scrapping.CharacterScrappingRepository;
 import org.kos.smashcharacters.helpers.TestValues;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.SQLException;
 
@@ -37,23 +37,18 @@ public class CharacterRepositoryTest {
     @Nested
     class PostgresRepositoryTest {
         HikariDataSource ds = new HikariCP().dsFrom("jdbc:postgresql://localhost/smashtools", "postgres", "postgres");
-        Sql sql = new Sql();
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
         Flyway flyway = new FlywayMigrations().flywayFrom(ds);
 
         @BeforeEach
-        public void init() throws SQLException {
-            flyway.migrate();
-            sql.update(ds.getConnection(), "insert into characters values('/sheik', 'sheik')");
-        }
-
-        @AfterEach
-        public void finish() throws SQLException {
+        public void init() {
             flyway.clean();
-            sql.update(ds.getConnection(), "drop table characters");
+            flyway.migrate();
+            jdbcTemplate.update("insert into characters values('/sheik', 'sheik')");
         }
 
         @Test
-        public void GivenAPostgresRepoIShouldBeAbleToRetrieveItsCharacters() {
+        public void GivenAPostgresRepoIShouldBeAbleToRetrieveItsCharacters() throws Exception {
             CharacterPostgresRepository repo = new CharacterPostgresRepository(ds);
             GivenACharacterRepositoryIShouldBeAbleToRetrieveItsCharacters(repo);
         }
