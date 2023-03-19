@@ -1,56 +1,31 @@
 package org.kos.smashcharacters.domain;
 
-import com.zaxxer.hikari.HikariDataSource;
-import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.*;
-import org.kos.db.FlywayMigrations;
-import org.kos.db.hikari.HikariCP;
-import org.kos.smashcharacters.drivenadapters.memory.CharacterInMemoryRepository;
-import org.kos.smashcharacters.drivenadapters.postgres.CharacterPostgresRepository;
-import org.kos.smashcharacters.drivenadapters.scrapping.CharacterScrappingRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.kos.smashcharacters.helpers.TestValues;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.kos.util.either.Right;
 
-import java.sql.SQLException;
+import java.util.List;
 
-
-public class CharacterRepositoryTest {
-
+public interface CharacterRepositoryTest {
     TestValues values = new TestValues();
 
-    private void GivenACharacterRepositoryIShouldBeAbleToRetrieveItsCharacters(CharacterRepository repo) {
+    default void _GivenACharacterRepositoryIShouldBeAbleToRetrieveItsCharacters(CharacterRepository repo) {
+        List<Character> initialState = List.of(values.sheik());
+        repo.setState(initialState);
         Assertions.assertTrue(repo.getCharacters().right().orElseThrow().contains(values.sheik()));
+        Assertions.assertEquals(initialState, repo.getState());
+    }
+
+    default void _GivenACharacterRepositoryIShouldBeAbleToInsertCharacters(CharacterRepository repo) {
+        List<Character> expectedState = List.of(values.sheik());
+        Assertions.assertEquals(new Right<>(1), repo.insertCharacter(values.sheik()));
+        Assertions.assertEquals(expectedState, repo.getState());
     }
 
     @Test
-    public void GivenAInMemoryRepoIShouldBeAbleToRetrieveItsCharacters() {
-        CharacterInMemoryRepository repo = new CharacterInMemoryRepository(values.characters());
-        GivenACharacterRepositoryIShouldBeAbleToRetrieveItsCharacters(repo);
-    }
+    void GivenACharacterRepositoryIShouldBeAbleToRetrieveItsCharacters();
 
     @Test
-    public void GivenAScrappingRepoIShouldBeAbleToRetrieveItsCharacters() {
-        CharacterScrappingRepository repo = new CharacterScrappingRepository();
-        GivenACharacterRepositoryIShouldBeAbleToRetrieveItsCharacters(repo);
-    }
-
-    @Nested
-    class PostgresRepositoryTest {
-        HikariDataSource ds = new HikariCP().dsFrom("jdbc:postgresql://localhost/smashtools", "postgres", "postgres");
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
-        Flyway flyway = new FlywayMigrations().flywayFrom(ds);
-
-        @BeforeEach
-        public void init() {
-            flyway.clean();
-            flyway.migrate();
-            jdbcTemplate.update("insert into characters values('/sheik', 'sheik')");
-        }
-
-        @Test
-        public void GivenAPostgresRepoIShouldBeAbleToRetrieveItsCharacters() throws Exception {
-            CharacterPostgresRepository repo = new CharacterPostgresRepository(ds);
-            GivenACharacterRepositoryIShouldBeAbleToRetrieveItsCharacters(repo);
-        }
-    }
+    void GivenACharacterRepositoryIShouldBeAbleToInsertCharacters();
 }

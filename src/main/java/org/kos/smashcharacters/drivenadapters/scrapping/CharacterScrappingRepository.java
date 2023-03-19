@@ -14,12 +14,11 @@ import java.util.List;
 import java.util.MissingResourceException;
 import java.util.Optional;
 
-public class CharacterScrappingRepository implements CharacterRepository {
-
-    @Override
+public class CharacterScrappingRepository {
     public Either<Exception, List<Character>> getCharacters() {
         try {
-            Document doc = Jsoup.connect("https://ultimateframedata.com").get();
+            String url = "https://ultimateframedata.com";
+            Document doc = Jsoup.connect(url).get();
             Element elementsById = doc
                     .body()
                     .getElementById("charList");
@@ -35,7 +34,7 @@ public class CharacterScrappingRepository implements CharacterRepository {
                     .map(s -> new Character(s, s.replace("/", "").replace("_", " ")))
                     .toList());
             if (maybeCharacters.isPresent()) return new Right<>(maybeCharacters.get());
-            else return new Left<>(new Exception("Couldn't find characters in https://ultimateframedata.com"));
+            else return new Left<>(new Exception("Couldn't find characters in " + url));
 
         } catch (IOException e) {
             return new Left<>(e);
