@@ -1,18 +1,18 @@
 package org.kos.util.either;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public class Either<L, R> {
     private final L left;
     private final R right;
 
-    public L left() {
-        return left;
+    public Optional<L> left() {
+        return Optional.ofNullable(left);
     }
 
-    //TODO: What happens if right is null!!
-    public R right() {
-        return right;
+    public Optional<R> right() {
+        return Optional.ofNullable(right);
     }
 
     public Either(L left, R right) {

@@ -19,7 +19,7 @@ public class CharacterRepositoryTest {
     TestValues values = new TestValues();
 
     private void GivenACharacterRepositoryIShouldBeAbleToRetrieveItsCharacters(CharacterRepository repo) {
-        Assertions.assertTrue(repo.getCharacters().right().contains(values.sheik()));
+        Assertions.assertTrue(repo.getCharacters().right().orElseThrow().contains(values.sheik()));
     }
 
     @Test
