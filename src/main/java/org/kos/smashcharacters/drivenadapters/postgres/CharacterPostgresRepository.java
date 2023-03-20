@@ -7,6 +7,8 @@ import org.kos.util.either.Either;
 import javax.sql.DataSource;
 import java.util.List;
 
+//TODO: Insert characters batch mode instead of one by one
+
 public class CharacterPostgresRepository implements CharacterRepository {
 
     DataSource ds;
@@ -21,5 +23,21 @@ public class CharacterPostgresRepository implements CharacterRepository {
     public Either<Exception, List<Character>> getCharacters() {
         String select = "select * from characters";
         return springHelper.query(select, new CharacterRowMapper());
+    }
+
+    @Override
+    public Either<Exception, Integer> insertCharacter(Character character) {
+        String insert = "insert into characters(slug, name) values(?,?)";
+        return springHelper.update(insert, character.slug(), character.name());
+    }
+
+    @Override
+    public void setState(List<Character> characters) {
+        characters.forEach(this::insertCharacter);
+    }
+
+    @Override
+    public List<Character> getState() {
+        return getCharacters().right().get();
     }
 }
