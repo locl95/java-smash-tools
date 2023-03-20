@@ -35,4 +35,16 @@ public class EitherTest {
         Either<Exception, Integer> e1 = new Either<>(new Exception(""), null);
         Assertions.assertEquals(e1, e1.map(Object::toString));
     }
+
+    @Test
+    public void GivenAnEitherWithRightSideThenFoldShouldApplyRightFunction() {
+        Either<Exception, Integer> e1 = new Either<>(null, 1);
+        Assertions.assertEquals("1", e1.fold(Throwable::getMessage, Object::toString));
+    }
+
+    @Test
+    public void GivenAnEitherWithLeftSideThenFoldShouldApplyLeftFunction() {
+        Either<Exception, Integer> e1 = new Either<>(new Exception("error"), null);
+        Assertions.assertEquals("error", e1.fold(Throwable::getMessage, Object::toString));
+    }
 }
