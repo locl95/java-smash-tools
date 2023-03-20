@@ -28,12 +28,11 @@ public class SpringController {
     private final CharacterMoveRepository characterMoveRepository = new CharacterMoveInMemoryRepository(List.of());
     private final CharacterApp characterApp = new CharacterProdApp(characterCachedRepo, characterRepo, characterMoveRepository);
 
-    //TODO: Improve Either so .get is not highlighted
+    //TODO: Improve ResponseEntity<T> so we can return something more specific than an Object
 
     @GetMapping("/characters")
-    ResponseEntity<List<Character>> getCharacters() {
+    ResponseEntity<Object> getCharacters() {
         Either<Exception, List<Character>> res = characterApp.getCharacters();
-        if (res.isRight()) return ResponseEntity.ok(res.right().get());
-        else return ResponseEntity.internalServerError().build();
+        return res.fold(error -> ResponseEntity.internalServerError().body(error.getMessage()), ResponseEntity::ok);
     }
 }

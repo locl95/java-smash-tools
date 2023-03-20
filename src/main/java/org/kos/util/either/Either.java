@@ -20,6 +20,11 @@ public class Either<L, R> {
         this.right = right;
     }
 
+    public <A> A fold(Function<L, A> leftF, Function<R, A> rightF) {
+        if (this.isRight()) return rightF.apply(right);
+        else return leftF.apply(left);
+    }
+
     public static <L, R> Either<L, R> ofLeft(L l) {
         return new Left<>(l);
     }
