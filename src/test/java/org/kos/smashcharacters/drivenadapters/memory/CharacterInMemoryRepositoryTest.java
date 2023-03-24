@@ -18,4 +18,11 @@ public class CharacterInMemoryRepositoryTest implements CharacterRepositoryTest 
         CharacterInMemoryRepository repo = new CharacterInMemoryRepository();
         _GivenACharacterRepositoryIShouldBeAbleToInsertCharacters(repo);
     }
+
+    @Override
+    @Test
+    public void GivenACharacterRepositoryIShouldNotBeAbleToInsertDuplicatedCharacters() {
+        CharacterInMemoryRepository repo = new CharacterInMemoryRepository();
+        _GivenACharacterRepositoryIShouldNotBeAbleToInsertDuplicatedCharacters(repo);
+    }
 }
