@@ -2,7 +2,9 @@ package org.kos.smashcharacters.domain;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.kos.smashcharacters.domain.errors.character.CharacterDuplicated;
 import org.kos.smashcharacters.helpers.TestValues;
+import org.kos.util.either.Left;
 import org.kos.util.either.Right;
 
 import java.util.List;
@@ -23,9 +25,20 @@ public interface CharacterRepositoryTest {
         Assertions.assertEquals(expectedState, repo.getState());
     }
 
+    default void _GivenACharacterRepositoryIShouldNotBeAbleToInsertDuplicatedCharacters(CharacterRepository repo) {
+        List<Character> initialState = List.of(values.sheik());
+        repo.setState(initialState);
+        List<Character> expectedState = List.of(values.sheik());
+        Assertions.assertEquals(new Left<>(new CharacterDuplicated("/sheik")), repo.insertCharacter(values.sheik()));
+        Assertions.assertEquals(expectedState, repo.getState());
+    }
+
     @Test
     void GivenACharacterRepositoryIShouldBeAbleToRetrieveItsCharacters();
 
     @Test
     void GivenACharacterRepositoryIShouldBeAbleToInsertCharacters();
+
+    @Test
+    void GivenACharacterRepositoryIShouldNotBeAbleToInsertDuplicatedCharacters();
 }

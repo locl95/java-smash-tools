@@ -2,10 +2,14 @@ package org.kos.smashcharacters.drivenadapters.postgres;
 
 import org.kos.smashcharacters.domain.Character;
 import org.kos.smashcharacters.domain.CharacterRepository;
+import org.kos.smashcharacters.domain.errors.character.CharacterDuplicated;
+import org.kos.smashcharacters.domain.errors.character.CharacterError;
+import org.kos.smashcharacters.domain.errors.character.CharacterUnexpectedError;
 import org.kos.util.either.Either;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.function.Function;
 
 //TODO: Insert characters batch mode instead of one by one
 
@@ -26,9 +30,13 @@ public class CharacterPostgresRepository implements CharacterRepository {
     }
 
     @Override
-    public Either<Exception, Integer> insertCharacter(Character character) {
+    public Either<CharacterError, Integer> insertCharacter(Character character) {
         String insert = "insert into characters(slug, name) values(?,?)";
-        return springHelper.update(insert, character.slug(), character.name());
+        Either<Exception, Integer> result = springHelper.update(insert, character.slug(), character.name());
+        return result.mapLeft(error -> {
+            if (error.getMessage().contains("already exists")) return new CharacterDuplicated(character.slug());
+            else return new CharacterUnexpectedError(error.getMessage());
+        });
     }
 
     @Override

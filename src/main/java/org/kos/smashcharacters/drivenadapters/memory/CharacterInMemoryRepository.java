@@ -2,7 +2,10 @@ package org.kos.smashcharacters.drivenadapters.memory;
 
 import org.kos.smashcharacters.domain.Character;
 import org.kos.smashcharacters.domain.CharacterRepository;
+import org.kos.smashcharacters.domain.errors.character.CharacterDuplicated;
+import org.kos.smashcharacters.domain.errors.character.CharacterError;
 import org.kos.util.either.Either;
+import org.kos.util.either.Left;
 import org.kos.util.either.Right;
 
 import java.util.List;
@@ -22,7 +25,8 @@ public class CharacterInMemoryRepository implements CharacterRepository {
     }
 
     @Override
-    public Either<Exception, Integer> insertCharacter(Character character) {
+    public Either<CharacterError, Integer> insertCharacter(Character character) {
+        if (characters.contains(character)) return new Left<>(new CharacterDuplicated(character.slug()));
         this.characters = Stream.concat(this.characters.stream(), Stream.of(character)).toList();
         return new Right<>(1);
     }

@@ -34,4 +34,11 @@ public class CharacterPostgresRepositoryTest implements CharacterRepositoryTest 
         CharacterPostgresRepository repo = new CharacterPostgresRepository(ds);
         _GivenACharacterRepositoryIShouldBeAbleToInsertCharacters(repo);
     }
+
+    @Override
+    @Test
+    public void GivenACharacterRepositoryIShouldNotBeAbleToInsertDuplicatedCharacters() {
+        CharacterPostgresRepository repo = new CharacterPostgresRepository(ds);
+        _GivenACharacterRepositoryIShouldNotBeAbleToInsertDuplicatedCharacters(repo);
+    }
 }

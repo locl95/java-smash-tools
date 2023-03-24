@@ -43,16 +43,21 @@ public class Either<L, R> {
         return right != null;
     }
 
-    <R2> Either<L, R2> map(Function<R, R2> f) {
+    public <R2> Either<L, R2> map(Function<R, R2> f) {
         if (isRight()) {
             return new Either<L, R2>(null, f.apply(this.right));
         } else return new Either<>(this.left, null);
     }
 
+    public <L2> Either<L2, R> mapLeft(Function<L, L2> f) {
+        if (isRight()) return new Either<>(null, this.right);
+        else return new Either<>(f.apply(this.left), null);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Either)) return false;
 
         Either<?, ?> either = (Either<?, ?>) o;
 
